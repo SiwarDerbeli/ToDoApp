@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        My Notebook
+    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  </head>
+</head>
+
+<body class="flex flex-col items-center justify-center" style="background-color: #3F3C52;">
+    <div class="mx-10 my-5 text-white rounded" style="background-color: #1F1D2B;font-family:Quicksand">
+
+    <div class=" flex items-center p-10  " x-data="{name:'', showName: false}">  
+
+        <div class="space-y-10 t">
+        <h1 class="text-5xl font-semibold">My Notebook</h1> 
+        <p class="text-xl text-gray-300 w-2/3">Take notes, reminders, set targets, collect ressources, and secure privacy.</p>
+        <div class="flex space-x-6 items-center  ">
+            <input class="rounded p-2 text-gray-500 w-96" x-model="name" placeholder="How can I call you ?" type="text">
+            <svg x-on:click="showName=true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-pulse w-12 h-8 text-indigo-500 cursor-pointer">
+                <path fill-rule="evenodd" d="M12 1.5a.75.75 0 01.75.75V4.5a.75.75 0 01-1.5 0V2.25A.75.75 0 0112 1.5zM5.636 4.136a.75.75 0 011.06 0l1.592 1.591a.75.75 0 01-1.061 1.06l-1.591-1.59a.75.75 0 010-1.061zm12.728 0a.75.75 0 010 1.06l-1.591 1.592a.75.75 0 01-1.06-1.061l1.59-1.591a.75.75 0 011.061 0zm-6.816 4.496a.75.75 0 01.82.311l5.228 7.917a.75.75 0 01-.777 1.148l-2.097-.43 1.045 3.9a.75.75 0 01-1.45.388l-1.044-3.899-1.601 1.42a.75.75 0 01-1.247-.606l.569-9.47a.75.75 0 01.554-.68zM3 10.5a.75.75 0 01.75-.75H6a.75.75 0 010 1.5H3.75A.75.75 0 013 10.5zm14.25 0a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H18a.75.75 0 01-.75-.75zm-8.962 3.712a.75.75 0 010 1.061l-1.591 1.591a.75.75 0 11-1.061-1.06l1.591-1.592a.75.75 0 011.06 0z" clip-rule="evenodd" />
+              </svg>
+              
+            </div>
+        
+            <div class="text-xl">
+            <h1 class="text-gray-300">Hello there <span class="font-semibold text-yellow-500" x-show="showName" x-text="name"></span> ! <br>How is it going ?</h1>
+            </div>
+        <a href="#workspace"> <button class="mt-10 bg-indigo-500 py-1 px-4 rounded-full" >Get started</button></a>
+        </div>
+        <div class="">
+            <img  src="k-removebg-preview.png" alt="">
+        </div>
+
+    </div>
+
+ <div id="workspace" x-data="{selected:'Tasks' ,showPart:false, tasks:[] , term: '' , date: '' ,note: '' , notes: [] }" class="p-10">
+
+<div class="flex justify-around">
+    <h1 class="cursor-pointer text-xl hover:text-gray-300 mb-10" x-bind:class="{'text-yellow-500 underline underline-offset-8 font-bold':selected=='Tasks'}"  x-on:click="showPart=false, selected='Tasks' " >Tasks</h1>
+    <h1 class="cursor-pointer text-xl hover:text-gray-300 mb-10" x-bind:class="{'text-yellow-500 underline underline-offset-8 font-bold':selected=='Notes'}"  x-on:click="showPart=true, selected='Notes'">Notes</h1>
+</div>
+
+
+<div  class="relative">
+    
+    
+   <div  x-show="!showPart" class="p-10"  >
+
+    <div class="flex justify-center items-center">
+        <div >
+           <input x-model="term" class="rounded w-96 p-2 text-gray-700" type="text" placeholder="Add a new task ...">
+           <input x-model="date"  class="rounded p-2 text-gray-700" type="date">
+        </div>
+    
+          <svg x-on:click="tasks.push({text: term, checked:false, expire: date}) , term='' "   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="cursor-pointer ml-4 w-12 h-12 text-indigo-500">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
+          </svg>
+          
+    </div>
+
+
+    
+    <div>
+        <h1 class="text-3xl mt-8">To do list</h1>
+
+        <template x-for="task in tasks">
+        <div  x-show="!task.checked" class="flex items-baseline mt-6">
+           <input x-model="task.checked" type="checkbox" class="">
+           <div class="ml-6">
+            <h1 x-text="task.text" ></h1>
+            <h1 x-text="task.expire"></h1>
+           </div>
+        </div>
+        </template>
+
+    </div>
+    
+
+
+    <div>
+        <h1 class="text-3xl mt-8">Done</h1>
+
+        <template   x-for="task in tasks">
+        <div x-show="task.checked" class="flex items-baseline mt-6">
+           <input x-model="task.checked" type="checkbox" class="">
+           <div class="ml-6">
+            <h1 x-text="task.text"></h1>
+            <h1 x-text="task.expire"></h1>
+           </div>
+        </div>
+        </template>
+
+    </div>
+
+
+   </div> 
+
+   <div x-show="showPart" class="absolute top-0 left-0">
+    <div class="flex justify-center items-center">
+        <div >
+           <input x-model="note" class="rounded w-96 p-2 text-gray-700" type="text" placeholder="Any news  ? ">
+           
+        </div>
+    
+          <svg x-on:click="notes.push(texte: note) , note='' "   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="cursor-pointer ml-4 w-12 h-12 text-indigo-500">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
+          </svg>
+          
+    </div>
+
+
+    
+    <div>
+        
+
+        <template x-for="note in notes">
+        <div   class="flex items-baseline mt-6">
+
+           <div class="ml-6">
+            <h1 x-text="note.texte" ></h1>
+            
+           </div>
+        </div>
+        </template>
+
+    </div>
+
+   </div>
+
+</div>
+
+ </div>
+    
+
+    </div>
+</body>
